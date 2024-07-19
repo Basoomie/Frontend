@@ -1,34 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Input from "./components/Input"
+import List from "./components/List"
+import { useEffect, useState } from "react"
 
 function App() {
-  const [count, setCount] = useState(0)
+  // used to save todos to local storage
+  function updateLocalStorage(todos: TodoItem[], idList: number[]) {
+    localStorage.setItem('todos', JSON.stringify(todos))
+    localStorage.setItem('idList', JSON.stringify(idList))
+  }
+
+  // fetch local storage data on page load
+  useEffect(() => {
+    if (!localStorage) {
+      return
+    }
+    const savedTodos = localStorage.getItem('todos')
+    savedTodos && setTodos(JSON.parse(savedTodos))
+
+    const savedIDs = localStorage.getItem('idList')
+    savedIDs && setSortedId(JSON.parse(savedIDs))
+  }, [])
+
+  // used to keep track of all IDs so we can get the largest ID
+  const [sortedId, setSortedId] = useState<number[]>([])
+  // used for the input field in Input.tsx, declared here since we use it in handleEditTodo
+  const [todoInputValue, setTodoInputValue] = useState("")
+
+  type TodoItem = {
+    todo: string,
+    id: number
+  }
+
+  const [todos, setTodos] = useState<TodoItem[]>([])
+
+  function handleAddTodo(newTodo: string) {
+    // get largest id and increment
+    const newTodoID: number = sortedId.length ? sortedId.slice(-1)[0] + 1 : 0
+    const newIDList = [...sortedId, newTodoID]
+    console.log(newTodoID)
+    
+    // add new todo to todo list and id to array
+    const newTodoList = [...todos, {todo: newTodo, id: newTodoID}] 
+    setTodos(newTodoList)
+    setSortedId(newIDList)
+    updateLocalStorage(newTodoList, newIDList)
+  }
+
+  //  adds todo to input field and deletes from list
+  function handleEditTodo(todoToEdit: TodoItem) {
+    setTodoInputValue(todoToEdit.todo) // move todo to input field to be edited and readded
+    handleDeleteTodo(todoToEdit.id) // delete todo from list
+  }
+
+  // adds all todo's to the new list except for the one where it's id matches the id to be deleted
+  function handleDeleteTodo(todoID: number) {
+    const newTodoList = todos.filter((todo) => {
+      return todo.id !== todoID
+    })
+    setTodos(newTodoList)
+    updateLocalStorage(newTodoList, sortedId)
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <main>
+      <Input handleAddTodo={handleAddTodo} todoInputValue={todoInputValue} setTodoInputValue={setTodoInputValue} />
+      <List todos={todos} handleDeleteTodo={handleDeleteTodo} handleEditTodo={handleEditTodo} />
+    </main>
   )
 }
 
