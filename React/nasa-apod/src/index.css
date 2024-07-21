@@ -3,9 +3,8 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: white;
+  background-color: #030615;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -20,32 +19,193 @@
 }
 
 #root {
+  min-height: 100vh;
   display: flex;
+  position: relative;
 }
 
-
-.mainImage {
-  max-width: 100%;
-  height: auto;
-
-  flex: 1;
-  object-fit: cover;
-}
-
-.sidebar {
+.imgContainer {
   display: flex;
   flex-direction: column;
 }
 
-.footer {
+
+.mainImage {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  object-fit: cover;
+}
+
+
+footer {
+  /* so the element start stays fixed to the bottom left of the page */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  display: flex; /* give the footer element its own flexbox */
+  justify-content: space-between; /* used to push header and info btn to left and right borders*/
+  gap: 1rem; /* im not sure why this line is necessary */
+
+  padding: 1rem;
+}
+
+/* what's the point of this?? */
+footer div {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
-.footerText {
-  align-self: flex-start;
+footer h2 {
+  font-size: 1.4rem;
 }
 
-.infoBtn {
-  align-self: flex-end;
+footer h1 {
+  font-size: 0.9rem;
+  font-weight: 200;
+}
+
+footer button {
+  background: transparent;
+  border: none;
+  outline: none; /* what is the point of including this> */
+
+  color: white;
+  padding: 1rem;
+
+  font-size: 1.3rem;
+
+  /* why put these under button and not button:hover?? */
+  transition-duration: 200ms;
+  cursor: pointer;
+}
+
+footer button:hover {
+  opacity: 0.7;
+}
+
+.bgGradient {
+  /* covers the entire parent container */
+  position: absolute;
+  inset: 0;
+  z-index: -1; /* layered above the container (footer) but all other descendants of footer */
+  background: linear-gradient(to top, #030615, rgba(255, 255, 255, 0)); /* going from bottom (black) to top (completely transparent) */
+}
+
+
+.sidebar {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.bgOverlay {
+  position: absolute;
+  inset: 0;
+  background: #030615;
+  opacity: 0.6;
+}
+
+.sidebarContent {
+  z-index: 15; /* so it's on top of the bgOverlay */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem; /* gap between child elements */
+  padding: 1rem; /* padding around each individual element */
+
+  overflow-y: auto; /* scrollbar only if the contents are larger than the height */
+  height: 100%;
+  width: 80%; /* What's the benefit of including this? */
+  max-width: 800px;
+  margin-left: auto; /* moves it to right side of page. */
+  
+  background-color: #030615;
+}
+
+.sidebarContents h2 {
+  font-weight: 200;
+  font-size: 1.4rem;
+}
+
+/* selects the description elements */
+.sidebarContent div {
+  flex: 1; /* used to push the arrow to the bottom */
+}
+
+.sidebarContent button {
+  background: transparent;
+  color: white;
+  border: none;
+  outline: none; /* what is the point of including this> */
+  margin-right: auto; /* to push the arrow to the left of the container */
+  padding: 1rem 0;
+  font-size: 1rem;
+  transition: 200ms;
+  cursor: pointer;
+}
+
+
+.sidebarContent button:hover {
+  opacity: 0.7;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.descDate {
+  font-weight: 200;
+}
+
+.loadingState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.loadingState i {
+  opacity: 0.2;
+  font-size: 5rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* styling for larger screens */
+@media (min-width: 640px) {
+  .sidebar {
+    position: relative; /* what does this do/change? */
+    inset: unset; /* what does this do/change? */
+    min-width: 30%;
+    box-shadow: 0 0 40px 1px #030615;
+  }
+
+  .sidebarContent {
+    margin: unset; /* removes margin-left: auto */
+    align-self: center;
+    width: 90%;
+  }
+
+  .bgOverlay {
+    right: 0;
+    left: unset;
+    width: 100vw;
+  }
 }
