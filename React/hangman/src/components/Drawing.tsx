@@ -12,9 +12,9 @@ const ARMS = (
     <div></div>
 )
 
-const LEGS = {
+const LEGS = (
     <div></div>
-}
+)
 
 
 export default function Drawing() {
