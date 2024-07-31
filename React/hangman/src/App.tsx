@@ -43,7 +43,7 @@ function App() {
         <>
           <Drawing />
           <Answer word={word} guessed={guessed} correct={correct} />
-          <Keyboard word={word} guessed={guessed} handleGuessLetter={handleGuessLetter} />
+          <Keyboard guessed={guessed} handleGuessLetter={handleGuessLetter} />
         </>
       )}
       <Button word={word} guessed={guessed} correct={correct} handleNewGame={handleNewGame} />

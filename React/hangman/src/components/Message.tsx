@@ -1,4 +1,3 @@
-import React from 'react'
 
 type MessageProps = {
     word: string,
@@ -11,8 +10,8 @@ export default function Message(props: MessageProps) {
 
     return (
         <div className='text-center p-16'>
-            {(correct === word.length && <h1 className='text:lg sm:text-xl md:text-2xl lg:text-3xl'>Winner</h1>) ||
-            guessed.length - correct > 5 && <h1 className='text:lg sm:text-xl md:text-2xl lg:text-3xl'>Loser</h1>}
+            {(correct === word.length && <h1 className='text:lg sm:text-xl md:text-2xl lg:text-3xl'>Congratulations, You Win!</h1>) ||
+            guessed.length - correct > 5 && <h1 className='text:lg sm:text-xl md:text-2xl lg:text-3xl'>Nice Try!</h1>}
             
         </div>
     )

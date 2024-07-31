@@ -1,13 +1,12 @@
 // the letters the user can guess (select)
 
 type KeyboardProps = {
-    word: string,
     guessed: string[],
     handleGuessLetter: (letter: string) => void
 }
 
 export default function Keyboard(props: KeyboardProps) {
-    const {word, guessed, handleGuessLetter} = props
+    const {guessed, handleGuessLetter} = props
 
     // array of albphabet
     const alphabet: string[] = [...Array(26).keys()].map((i) => String.fromCharCode(65 + i))
