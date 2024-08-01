@@ -1,5 +1,10 @@
 // contains the hangman drawing
 
+type DrawingProps = {
+    guessed: string[],
+    correct: number
+}
+
 const HEAD = (
     <div></div>
 )
@@ -17,7 +22,9 @@ const LEGS = (
 )
 
 
-export default function Drawing() {
+export default function Drawing(props: DrawingProps) {
+    const {guessed, correct} = props
+    
     return (
         <div>
             <div className="">

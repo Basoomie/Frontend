@@ -41,7 +41,7 @@ function App() {
       {(guessed.length - correct > 5 || (word && correct === word.length)) && <Message word={word} guessed={guessed} correct={correct}/>}
       {word && (
         <>
-          <Drawing />
+          <Drawing guessed={guessed} correct={correct} />
           <Answer word={word} guessed={guessed} correct={correct} />
           <Keyboard guessed={guessed} handleGuessLetter={handleGuessLetter} />
         </>
