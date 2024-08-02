@@ -21,6 +21,7 @@ const LEGS = (
     <div></div>
 )
 
+const hangmanFigure = [HEAD, BODY, ARMS, ARMS, LEGS, LEGS]
 
 export default function Drawing(props: DrawingProps) {
     const {guessed, correct} = props
@@ -30,6 +31,13 @@ export default function Drawing(props: DrawingProps) {
             <div className="">
 
             </div>
+            {[...Array(hangmanFigure.length)].map(index => {
+                return (
+                    <div key={index}>
+                        (guessed.length - correct == index) && hangmanFigure[index - 1]
+                    </div>
+                )
+            })}
         </div>
     )
 }
