@@ -6,19 +6,19 @@ type DrawingProps = {
 }
 
 const HEAD = (
-    <div></div>
+    <div className="w-5"></div>
 )
 
 const BODY = (
-    <div></div>
+    <div className="w-5"></div>
 )
 
 const ARMS = (
-    <div></div>
+    <div className="w-5"></div>
 )
 
 const LEGS = (
-    <div></div>
+    <div className="w-5"></div>
 )
 
 const hangmanFigure = [HEAD, BODY, ARMS, ARMS, LEGS, LEGS]
@@ -28,9 +28,10 @@ export default function Drawing(props: DrawingProps) {
     
     return (
         <div>
-            <div className="">
+            <div className="w-5"></div>
+            <div className="w-5"></div>
+            <div className="w-5"></div>
 
-            </div>
             {[...Array(hangmanFigure.length)].map(index => {
                 return (
                     <div key={index}>
